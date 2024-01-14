@@ -1,1 +1,65 @@
-var v=function(w){const f=w.matches,j=window.sessionStorage.getItem("color-scheme"),u=document.documentElement;switch(j){case"dark":{if(f)window.sessionStorage.setItem("color-scheme","automatic");u.classList.toggle("light-mode",!1),u.classList.toggle("dark-mode",!0);break}case"light":{if(!f)window.sessionStorage.setItem("color-scheme","automatic");u.classList.toggle("light-mode",!0),u.classList.toggle("dark-mode",!1);break}case"automatic":default:{u.classList.toggle("light-mode",f===!1),u.classList.toggle("dark-mode",f===!0);break}}},z=function(){const w=window.matchMedia("(prefers-color-scheme: dark)"),f=w.matches;switch(window.sessionStorage.getItem("color-scheme")){case"dark":{window.sessionStorage.setItem("color-scheme",f?"light":"automatic");break}case"light":{window.sessionStorage.setItem("color-scheme",f?"automatic":"dark");break}case"automatic":default:{window.sessionStorage.setItem("color-scheme",f?"light":"dark");break}}v(w)},B=function(w,f=A){const j=document.querySelector(w),u=window.sessionStorage.getItem(f);j.classList.toggle("serif",u==="serif"),j.classList.toggle("round",u==="round"),j.classList.toggle("sans",u==="sans")},x=window.matchMedia("(prefers-color-scheme: dark)");x.addListener(v);v(window.matchMedia("(prefers-color-scheme: dark)"));var A="mine-type-scheme";B("body");window.toggleTheme=z;
+// ../../../../.bun/install/global/node_modules/mine.css/dist/theme-switcher.js
+var colorSchemeMql = window.matchMedia("(prefers-color-scheme: dark)");
+colorSchemeMql.addListener(setTheme);
+function setTheme(e) {
+  const isDarkMode = e.matches;
+  const colorScheme = window.sessionStorage.getItem("color-scheme");
+  const body = document.documentElement;
+  switch (colorScheme) {
+    case "dark": {
+      if (isDarkMode)
+        window.sessionStorage.setItem("color-scheme", "automatic");
+      body.classList.toggle("light-mode", false);
+      body.classList.toggle("dark-mode", true);
+      break;
+    }
+    case "light": {
+      if (!isDarkMode)
+        window.sessionStorage.setItem("color-scheme", "automatic");
+      body.classList.toggle("light-mode", true);
+      body.classList.toggle("dark-mode", false);
+      break;
+    }
+    case "automatic":
+    default: {
+      body.classList.toggle("light-mode", isDarkMode === false);
+      body.classList.toggle("dark-mode", isDarkMode === true);
+      break;
+    }
+  }
+}
+setTheme(window.matchMedia("(prefers-color-scheme: dark)"));
+function toggleTheme() {
+  const mql = window.matchMedia("(prefers-color-scheme: dark)");
+  const isDarkMode = mql.matches;
+  const colorScheme = window.sessionStorage.getItem("color-scheme");
+  switch (colorScheme) {
+    case "dark": {
+      window.sessionStorage.setItem("color-scheme", isDarkMode ? "light" : "automatic");
+      break;
+    }
+    case "light": {
+      window.sessionStorage.setItem("color-scheme", isDarkMode ? "automatic" : "dark");
+      break;
+    }
+    case "automatic":
+    default: {
+      window.sessionStorage.setItem("color-scheme", isDarkMode ? "light" : "dark");
+      break;
+    }
+  }
+  setTheme(mql);
+}
+var defaultTypeSetting = "mine-type-scheme";
+function setType(querySelector, settingsKey = defaultTypeSetting) {
+  const element = document.querySelector(querySelector);
+  const desiredType = window.sessionStorage.getItem(settingsKey);
+  element.classList.toggle("serif", desiredType === "serif");
+  element.classList.toggle("round", desiredType === "round");
+  element.classList.toggle("sans", desiredType === "sans");
+}
+setType("body");
+
+// ../../../../.bun/install/global/node_modules/top-bun/lib/defaults/default.client.js
+window.toggleTheme = toggleTheme;
+//# sourceMappingURL=default.client.js-N4RJZJWN.js.map
